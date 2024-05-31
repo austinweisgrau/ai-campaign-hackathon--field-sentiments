@@ -6,7 +6,7 @@ import uuid
 
 from flask import Flask, jsonify, render_template, request
 
-from utilities.orm.methods import load_rows_to_database, query
+from utilities.orm.methods import load_rows_to_database, query, fetch_report
 from utilities.orm.models import BatchAnalysis, CanvassResult
 from utilities.llm.methods import assemble_prompt, query_gpt
 
@@ -56,12 +56,6 @@ def generate_report():
         created_at=datetime.datetime.now(),
     )
     load_rows_to_database(batch_analysis)
-
-
-@app.route("/fetch_report")
-def fetch_report():
-    report = fetch_report()
-    return report
 
 
 @app.route("/report")
