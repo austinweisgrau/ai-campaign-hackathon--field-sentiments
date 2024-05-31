@@ -55,3 +55,17 @@ def report():
     load_rows_to_database(batch_analysis)
     report = assemble_report()
     return report
+
+
+def assemble_prompt(all_memos: list[str]) -> str:
+    """Take all memos and assemble prompt for GPT summarization/analysis."""
+    raise NotImplementedError
+
+
+def query_gpt(gpt_prompt: str) -> str:
+    raise NotImplementedError
+
+
+def assemble_report() -> str:
+    """Assemble report based on latest batch analysis."""
+    raise NotImplementedError
