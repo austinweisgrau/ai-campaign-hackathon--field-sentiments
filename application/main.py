@@ -63,10 +63,15 @@ def report():
 
 def assemble_prompt(all_memos: list[str]) -> str:
     """Take all memos and assemble prompt for GPT summarization/analysis."""
+
+    # Format all memos into a list of h2 tags
+    all_memos_formatted = "\n".join([f"<h2>{memo}</h2>" for memo in all_memos])
+
     raise NotImplementedError
 
 
 def query_gpt(gpt_prompt: str) -> str:
+    """Hit LLM API with gpt prompt, return response."""
     if not "OPENAI_API_KEY" in os.environ:
         raise KeyError("Set OPENAI_API_KEY in environment.")
 
