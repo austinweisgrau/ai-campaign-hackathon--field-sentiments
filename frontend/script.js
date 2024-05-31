@@ -11,8 +11,8 @@ function getSpeechRecognition() {
       window.fetch('/api/receive_memo', {
         type: 'POST',
         data: {
-          geo_lat: 100,
-          geo_lng: 100,
+          geo_lat: position.latitude,
+          geo_lng: position.longitude,
           memo: content.value
         },
       });
@@ -25,11 +25,14 @@ function getSpeechRecognition() {
 const button = document.getElementById('record');
 const content = document.getElementById("content");
 const bg = document.querySelector("html");
+let position = { latitude: null, longitude: null };
+const watchID = navigator.geolocation.watchPosition((position) => {
+  position = position.coords;
+});
 
 (() => {
   let live = null;
   document.getElementById('record').addEventListener('click', () => {
-    debugger;
     if (live) {
       live.stop();
       live = null;
