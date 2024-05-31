@@ -5,12 +5,15 @@ function getReport() {
   const httpRequest = new XMLHttpRequest();
   const url = '/get_report';
 
+  button.classList.add('report--loading')
+    
   httpRequest.onreadystatechange = function() {
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
       if (httpRequest.status === 200) {
         const response = httpRequest.responseText;
+	button.classList.remove('report--loading')
+	button.hidden = true;
         document.getElementById('content').innerHTML = response;
-	button.hidden = true;  
       } else {
         console.error('There was a problem with the request.');
       }

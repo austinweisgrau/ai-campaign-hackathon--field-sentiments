@@ -1,10 +1,36 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://kit.fontawesome.com/05b8235ba3.css" crossorigin="anonymous">
     <style>
       .btn-secondary {
       background-color: #652887;
       color: #fff;
+      }
+      #report.report--loading {
+      opacity: .55;
+      transition: opacity .18s ease-in-out, color .18s ease-in-out;
+      pointer-events: none;
+      position: relative;
+      color: transparent;
+      }
+      
+      #report::before {
+      content: "Loading"; /* Fontawesome Loading Icon Here */
+      font-family: fontawesome;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 18px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .18s ease-in-out;
+      animation: spin 1s infinite;
+      }
+      #report.report--loading::before {
+       opacity: 1;
       }
     </style>
   </head>
