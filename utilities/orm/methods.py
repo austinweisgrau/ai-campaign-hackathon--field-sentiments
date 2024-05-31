@@ -20,12 +20,6 @@ def create_new_tables() -> None:
     This does not recreate tables that already exist. The simplest method to do that (assuming total data loss in the table is acceptable) is to run delete_table() followed by create_new_tables()
     """
     Base.metadata.create_all(get_engine())
-    tables = Base.metadata.tables.keys()
-    permission_query = ""
-    for table in tables:
-        permission_query += f'grant all on "{table}" to vpfg_prod;\n'
-        permission_query += f'grant all on "{table}" to vpfg_dev;\n'
-    query(permission_query, commit=True)
 
 
 def get_session() -> Session:
