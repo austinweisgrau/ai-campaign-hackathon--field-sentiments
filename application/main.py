@@ -60,6 +60,11 @@ def generate_report():
 
 @app.route("/report")
 def report():
+    return render_template("report.html")
+
+
+@app.route("/get_report")
+def get_report():
     generate_report()
     result = fetch_report()
     return result
