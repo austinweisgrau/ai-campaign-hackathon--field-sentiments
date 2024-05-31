@@ -6,7 +6,18 @@ function getSpeechRecognition() {
   recognition.maxAlternatives = 1;
   recognition.onresult = (event) => {
     content.value = event.results[0][0].transcript;
-    confirm("Look correct?\n\n" + content.value);
+    const status = confirm("Look correct?\n\n" + content.value);
+    if (status) {
+      window.fetch('/api/receive_memo', {
+        type: 'POST',
+        data: {
+          geo_lat: 100,
+          geo_lng: 100,
+          memo: content.value
+        },
+      });
+    }
+    content.value = '';
   };
   return recognition;
 }
