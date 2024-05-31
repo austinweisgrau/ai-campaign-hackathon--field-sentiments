@@ -8,9 +8,6 @@ from sqlalchemy.orm import Session
 from utilities.orm.models import Base
 
 import warnings
-from cryptography.utils import CryptographyDeprecationWarning
-
-warnings.filterwarnings("ignore", category=CryptographyDeprecationWarning)
 
 logger = logging.getLogger(__name__)
 

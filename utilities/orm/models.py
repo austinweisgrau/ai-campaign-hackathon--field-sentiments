@@ -82,15 +82,16 @@ class Base(DeclarativeBase):
 
 
 class CanvassResult(Base):
-    __tablename__ = "canvass_result"
+    __tablename__ = "canvassresult"
     canvass_result_id: Mapped[str] = mapped_column(primary_key=True)
-    geotag: Mapped[str]
+    geo_lat: Mapped[str]
+    geo_long: Mapped[str]
     memo: Mapped[str]
     created_at: Mapped[datetime.datetime]
 
 
 class BatchAnalysis(Base):
-    __tablename__ = "batch_analysis"
+    __tablename__ = "batchanalysis"
     batch_analysis_id: Mapped[str] = mapped_column(primary_key=True)
     gpt_input_prompt: Mapped[str]
     gpt_output: Mapped[str]
