@@ -67,4 +67,5 @@ def report():
 def get_report():
     generate_report()
     result = fetch_report()
+    result = result.replace("\n", "<br>")
     return result

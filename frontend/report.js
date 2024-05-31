@@ -9,7 +9,8 @@ function getReport() {
     if (httpRequest.readyState === XMLHttpRequest.DONE) {
       if (httpRequest.status === 200) {
         const response = httpRequest.responseText;
-        document.getElementById('content').textContent = response;
+        document.getElementById('content').innerHTML = response;
+	button.hidden = true;  
       } else {
         console.error('There was a problem with the request.');
       }
