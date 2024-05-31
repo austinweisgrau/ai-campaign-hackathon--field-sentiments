@@ -4,7 +4,7 @@ import secrets
 import datetime
 import uuid
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, redirect, url_for
 
 from utilities.orm.methods import load_rows_to_database, query, fetch_report
 from utilities.orm.models import BatchAnalysis, CanvassResult
@@ -69,3 +69,9 @@ def get_report():
     result = fetch_report()
     result = result.replace("\n", "<br>")
     return result
+
+
+@app.route("/purge")
+def purge():
+    query("delete from canvassresult where true")
+    return redirect(url_for("index"))
