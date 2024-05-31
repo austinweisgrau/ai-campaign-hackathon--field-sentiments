@@ -1,12 +1,16 @@
 import logging
+import os
 import secrets
 import uuid
 from datetime import datetime
 
+import requests
 from flask import Flask, jsonify, render_template, request
-from utilities.orm.methods import load_rows_to_database, query
+from langchain.chat_models import ChatOpenAI
+from langchain.schema import HumanMessage, SystemMessage
 
-from utilities.orm.models import CanvassResult, BatchAnalysis
+from utilities.orm.methods import load_rows_to_database, query
+from utilities.orm.models import BatchAnalysis, CanvassResult
 
 logger = logging.getLogger(__name__)
 
@@ -63,9 +67,26 @@ def assemble_prompt(all_memos: list[str]) -> str:
 
 
 def query_gpt(gpt_prompt: str) -> str:
-    raise NotImplementedError
+    if not "OPENAI_API_KEY" in os.environ:
+        raise KeyError("Set OPENAI_API_KEY in environment.")
+
+    chat = ChatOpenAI(model_name="gpt-4o", temperature=0)
+    resp = chat(
+        [
+            SystemMessage(
+                content="You are a helpful assistant that summarizes and analyzes collections of notes."
+            ),
+            HumanMessage(content=gpt_prompt),
+        ]
+    )
+    result = resp.content
+
+    return result
 
 
 def assemble_report() -> str:
     """Assemble report based on latest batch analysis."""
+    latest_analysis = query(
+        "select gpt_output from batchanalysis order by created_at desc limit 1"
+    )
     raise NotImplementedError
