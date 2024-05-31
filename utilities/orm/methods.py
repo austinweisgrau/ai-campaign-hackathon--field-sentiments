@@ -1,11 +1,14 @@
 """Methods for working with the SQLAlchemy ORM connected to the VPfG database."""
 
 import logging
+import datetime
+import uuid
 from typing import Union
 
 import sqlalchemy
 from sqlalchemy.orm import Session
-from utilities.orm.models import Base
+from utilities.orm.models import Base, CanvassResult
+from utilities.orm import seeds
 
 import warnings
 
@@ -110,4 +113,27 @@ def query(
     except sqlalchemy.exc.ResourceClosedError:
         # Some queries, like create table statements, have no return
         result = None
+    return result
+
+
+def seed_database_with_canvass_results():
+    canvass_results = []
+    for memo in seeds.memos:
+        canvass_result = CanvassResult(
+            geo_lat=1,
+            geo_long=2,
+            memo=memo,
+            created_at=datetime.datetime.now(),
+            canvass_result_id=str(uuid.uuid4()),
+        )
+        canvass_results.append(canvass_result)
+    load_rows_to_database(canvass_results)
+
+
+def fetch_report() -> str:
+    """Assemble report based on latest batch analysis."""
+    query_response = query(
+        "select gpt_output from batchanalysis order by created_at desc limit 1"
+    )
+    result = query_response[0][0]
     return result
