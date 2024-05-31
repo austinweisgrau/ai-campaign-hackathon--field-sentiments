@@ -5,4 +5,4 @@
 
 set -e
 
-/usr/local/bin/gunicorn -b 0.0.0.0:3000 --workers 4 wsgi:app --access-logfile '-' --timeout 1080
+/usr/local/bin/gunicorn -b 0.0.0.0:"$PORT" --workers 4 wsgi:app --access-logfile '-' --timeout 1080
