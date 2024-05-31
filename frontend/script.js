@@ -6,7 +6,7 @@ function getSpeechRecognition() {
   recognition.maxAlternatives = 1;
   recognition.onresult = (event) => {
     content.value = event.results[0][0].transcript;
-    const status = confirm("Look correct?\n\n" + content.value);
+    const status = true // confirm("Look correct?\n\n" + content.value);
     if (status) {
       window.fetch('/api/receive_memo', {
         type: 'POST',
